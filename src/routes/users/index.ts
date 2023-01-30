@@ -154,17 +154,11 @@ const plugin: FastifyPluginAsyncJsonSchemaToTs = async (
         equals: request.params.id,
       });
 
-      if (!user) {
+      if (!user || !userToUnsubscribe) {
         throw fastify.httpErrors.badRequest();
       }
 
-      if (!userToUnsubscribe) {
-        throw fastify.httpErrors.badRequest();
-      }
-
-      const isUserSubscribed = user.subscribedToUserIds.includes(
-        userToUnsubscribe.id
-      );
+      const isUserSubscribed = user.subscribedToUserIds.includes(userToUnsubscribe.id);
       if (!isUserSubscribed) {
         throw fastify.httpErrors.badRequest();
       }
